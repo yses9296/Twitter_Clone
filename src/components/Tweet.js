@@ -1,7 +1,7 @@
 import { dbService, storageService } from 'fBase';
 import React, { memo, useState } from 'react';
 import gravatar from 'gravatar';
-import { TweetSide, TweetHeader, TweetUser, TweetDate, TweetList, TweetContent, TweetBtns, TweetBtn, TweetAvatar, TextInput, ButtonInput } from './style';
+import { TweetSide, TweetHeader, TweetUser, TweetDate, TweetList, TweetImg, TweetText, TweetBtns, TweetBtn, TweetAvatar, TextInput, ButtonInput } from './style';
 import { doc, deleteDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { ref, deleteObject } from "firebase/storage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -51,7 +51,7 @@ const Tweet = memo(({ tweetObj, isOwner }) => {
                 <TweetSide>
                     <TweetAvatar src={gravatar.url(tweetObj.userName, { s: '40px', d: 'retro' })} alt={tweetObj.userName} />
                 </TweetSide>
-                <TweetContent>
+                <div>
                     <TweetHeader>
                         <TweetUser>{tweetObj.userName}</TweetUser>
                     </TweetHeader>
@@ -60,7 +60,7 @@ const Tweet = memo(({ tweetObj, isOwner }) => {
                         <ButtonInput type="submit" value="Update"/>
                     </form>
                     <TweetBtn onClick={toggleUpdateTweet}>Cancel</TweetBtn>
-                </TweetContent>
+                </div>
             </TweetList>
             </>
         ) : (
@@ -70,16 +70,16 @@ const Tweet = memo(({ tweetObj, isOwner }) => {
                     <TweetAvatar src={gravatar.url(tweetObj.userName, { s: '40px', d: 'retro' })} alt={tweetObj.userName} />
                 </TweetSide>
                 
-                <TweetContent>
+                <div>
                     <TweetHeader>
                         <TweetUser>{tweetObj.userName}</TweetUser>
                         {/* <TweetDate>{dateFormat(tweetObj.createdAt)}</TweetDate> */}
                     </TweetHeader>
 
-                    {tweetObj.text}
+                    <TweetText>{tweetObj.text}</TweetText>
                     {tweetObj.attachmentUrl && (
-                        <img src={tweetObj.attachmentUrl} width="200px" height='200px' alt={tweetObj.fileName}/>
-                    )}
+                        <TweetImg src={tweetObj.attachmentUrl} alt={tweetObj.fileName}/>
+                    )}                    
 
                     {isOwner && (
                         <TweetBtns>
@@ -87,7 +87,7 @@ const Tweet = memo(({ tweetObj, isOwner }) => {
                             <TweetBtn onClick={toggleUpdateTweet}><FontAwesomeIcon icon={faPencilAlt} /></TweetBtn>
                         </TweetBtns>
                     )}
-                </TweetContent>
+                </div>
             </TweetList>
             </>
         ) }

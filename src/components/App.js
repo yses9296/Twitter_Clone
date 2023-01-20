@@ -11,7 +11,7 @@ const App = memo(() => {
   const [userObj, setUserObj] = useState(null);
 
   useEffect(()=>{
-    authService.onAuthStateChanged ( user => {
+    authService.onAuthStateChanged ((user) => {
       if(user) {
         setLoggedIn(true);
         setUserObj(user);

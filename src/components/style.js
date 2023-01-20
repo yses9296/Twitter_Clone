@@ -257,8 +257,14 @@ export const TweetList = styled.li`
         border-bottom: 0;
     }
 `;
-export const TweetContent = styled.div`
 
+export const TweetText = styled.p`
+    display: block;
+    margin-bottom: 10px;
+`
+export const TweetImg = styled.img`
+    width: 200px;
+    height: 200px;
 `
 
 export const TweetBtns = styled.div`

@@ -17,7 +17,7 @@ const Profile = memo(({ userObj, refreshUser }) => {
 
   const onClickLogoutBtn = () => {
     auth.signOut();
-    refreshUser();
+    // refreshUser();
     navigator('/');
   }
   const toggleUpdateProfile = () => {

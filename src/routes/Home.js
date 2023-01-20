@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useState } from 'react';
-import { dbService } from 'fBase';
+import { authService, dbService } from 'fBase';
 import { collection, query, onSnapshot, orderBy } from 'firebase/firestore';
 import { Main } from './style';
 import Tweet from '../components/Tweet';
@@ -10,15 +10,21 @@ const Home = memo(( { userObj } ) => {
 
   useEffect(()=>{
     const _query = query( collection(dbService, "tweets"), orderBy("createdAt", "desc"));
-    onSnapshot(_query, (snapshot) => {
+    
+    const querySnapshot = onSnapshot(_query, (snapshot) => {
       const tweetArr = snapshot.docs.map( (doc) => ({
           id: doc.id, 
           ...doc.data(),
       }))
       setTweets(tweetArr)
-    })
+    });
 
-    
+    authService.onAuthStateChanged((user) => {
+      if(user == null){
+        querySnapshot();
+      }
+    })
+   
   },[]);
 
 
